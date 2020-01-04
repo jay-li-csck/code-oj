@@ -1,0 +1,34 @@
+给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。
+
+给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。
+//回溯法
+class Solution {
+    HashMap<String,String> map = new HashMap<>();
+    List<String> ans = new ArrayList<>();   
+    public List<String> letterCombinations(String digits) {
+        map.put("2","abc");
+        map.put("3","def");
+        map.put("4","ghi");
+        map.put("5","jkl");
+        map.put("6","mno");
+        map.put("7","pqrs");
+        map.put("8","tuv");
+        map.put("9","wxyz");
+        if(digits.length() != 0)
+            back("",digits);
+        return ans; 
+    }
+    private void back(String s,String d) {
+        if(d.length() == 0){
+            ans.add(s);
+            return ;
+        }else {
+            String t = d.substring(0,1);//截取第一个
+            String m = map.get(t);//对应的map
+            for(int i = 0; i < m.length(); i++) {//多种情况
+                String j =  m.substring(i,i+1);
+                back(s+j,d.substring(1));//回溯
+            }
+        }
+    }
+}
