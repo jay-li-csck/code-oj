@@ -1,0 +1,54 @@
+给定一个二叉树
+
+struct Node {
+  int val;
+  Node *left;
+  Node *right;
+  Node *next;
+}
+
+填充它的每个 next 指针，让这个指针指向其下一个右侧节点。如果找不到下一个右侧节点，则将 next 指针设置为 NULL。
+
+初始状态下，所有 next 指针都被设置为 NULL。
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public Node left;
+    public Node right;
+    public Node next;
+
+    public Node() {}
+
+    public Node(int _val,Node _left,Node _right,Node _next) {
+        val = _val;
+        left = _left;
+        right = _right;
+        next = _next;
+    }
+};
+*/
+class Solution {
+    public Node connect(Node root) {
+        if(root == null)
+            return null;
+        Node cur = root;
+        while(cur != null) {
+            Node dummy = new Node();
+            Node tail = dummy;
+            while(cur != null){
+              if(cur.left != null ) {
+                  tail.next = cur.left;//利用tail串起来一行
+                  tail = tail.next;
+              }
+              if(cur.right != null) {
+                  tail.next = cur.right;
+                  tail = tail.next;
+              }
+              cur = cur.next;
+            }
+            cur = dummy.next;//dummy.next为第一个子树
+        }
+        return root;
+    }
+}
