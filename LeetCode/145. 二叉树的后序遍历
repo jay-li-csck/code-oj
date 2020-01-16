@@ -1,0 +1,35 @@
+给定一个二叉树，返回它的 后序 遍历。
+
+示例:
+
+输入: [1,null,2,3]  
+   1
+    \
+     2
+    /
+   3 
+
+输出: [3,2,1]
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    private List<Integer> r = new ArrayList<>();
+    public List<Integer> postorderTraversal(TreeNode root) {
+        post(root);//递归 
+        return r;
+    }
+    private void post(TreeNode root) {
+        if(root == null) return;
+        post(root.left);
+        post(root.right);
+        r.add(root.val);
+    }
+}
