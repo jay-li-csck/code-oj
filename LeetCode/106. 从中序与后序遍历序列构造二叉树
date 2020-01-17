@@ -1,0 +1,48 @@
+根据一棵树的中序遍历与后序遍历构造二叉树。
+
+注意:
+你可以假设树中没有重复的元素。
+
+例如，给出
+
+中序遍历 inorder = [9,3,15,20,7]
+后序遍历 postorder = [9,15,7,20,3]
+
+返回如下的二叉树：
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+   
+   
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public TreeNode buildTree(int[] inorder, int[] postorder) {  
+        int inl = 0,inr = inorder.length-1;
+        int pol = 0,por = postorder.length-1;
+        return buildTree(inorder,inl,inr,postorder,pol,por); 
+    }
+    private TreeNode buildTree(int []inorder,int inl,int inr,int[] postorder,int pol,int por) {
+        if(inl > inr || pol > por) return null;
+        int proot = postorder[por];//后序遍历最后一个为根节点
+        int pi = inl;
+        while(inorder[pi] != proot) {
+            pi++;
+        }
+        int left = pi - inl;//左子树数量
+        TreeNode root = new TreeNode(proot);
+        root.left = buildTree(inorder,inl,pi-1,postorder,pol,pol+left-1);
+        root.right = buildTree(inorder,pi+1,inr,postorder,pol+left,por-1);
+        return root;
+    }
+}
