@@ -1,0 +1,59 @@
+实现一个二叉搜索树迭代器。你将使用二叉搜索树的根节点初始化迭代器。
+
+调用 next() 将返回二叉搜索树中的下一个最小的数。
+
+示例：
+        7
+      /   \
+    3       15
+            / \
+           9   20
+BSTIterator iterator = new BSTIterator(root);
+iterator.next();    // 返回 3
+iterator.next();    // 返回 7
+iterator.hasNext(); // 返回 true
+iterator.next();    // 返回 9
+iterator.hasNext(); // 返回 true
+iterator.next();    // 返回 15
+iterator.hasNext(); // 返回 true
+iterator.next();    // 返回 20
+iterator.hasNext(); // 返回 false
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class BSTIterator {
+    private Queue<Integer> q = new LinkedList<>();
+    public BSTIterator(TreeNode root) {
+        inorder(root);
+    }
+    private void inorder(TreeNode r) {
+        if(r == null) return ;
+        inorder(r.left);
+        q.offer(r.val);//中序遍历是升序序列，添加到队列 先进先出
+        inorder(r.right);
+    }
+    /** @return the next smallest number */
+    public int next() {
+        return q.poll();
+    }
+
+    
+    /** @return whether we have a next smallest number */
+    public boolean hasNext() {
+        return !q.isEmpty();
+    }
+}
+
+/**
+ * Your BSTIterator object will be instantiated and called as such:
+ * BSTIterator obj = new BSTIterator(root);
+ * int param_1 = obj.next();
+ * boolean param_2 = obj.hasNext();
+ */
