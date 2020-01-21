@@ -1,0 +1,56 @@
+给定一个二叉搜索树，编写一个函数 kthSmallest 来查找其中第 k 个最小的元素。
+
+说明：
+你可以假设 k 总是有效的，1 ≤ k ≤ 二叉搜索树元素个数。
+
+示例 1:
+
+输入: root = [3,1,4,null,2], k = 1
+   3
+  / \
+ 1   4
+  \
+   2
+输出: 1
+
+示例 2:
+
+输入: root = [5,3,6,2,4,null,null,1], k = 3
+       5
+      / \
+     3   6
+    / \
+   2   4
+  /
+ 1
+输出: 3
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    /*通过查找子节点个数实现
+    左子树节点个数为le    <=le则在左子树上
+    le+1 = k 为根节点
+    */
+    public int kthSmallest(TreeNode root, int k) {
+        int le = findSum(root.left);
+        if(le+1 == k) 
+            return root.val;
+        else if(le < k)
+            return kthSmallest(root.right,k-le-1);
+        else 
+            return kthSmallest(root.left,k);
+    }
+    private int findSum(TreeNode root) {//计算节点总数
+        if(root == null) 
+            return 0;
+        return findSum(root.left)+findSum(root.right)+1;
+    }
+}
