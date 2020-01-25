@@ -1,0 +1,72 @@
+给定一个 m x n 的矩阵，如果一个元素为 0，则将其所在行和列的所有元素都设为 0。请使用原地算法。
+
+示例 1:
+
+输入: 
+[
+  [1,1,1],
+  [1,0,1],
+  [1,1,1]
+]
+输出: 
+[
+  [1,0,1],
+  [0,0,0],
+  [1,0,1]
+]
+
+示例 2:
+
+输入: 
+[
+  [0,1,2,0],
+  [3,4,5,2],
+  [1,3,1,5]
+]
+输出: 
+[
+  [0,0,0,0],
+  [0,4,5,0],
+  [0,3,1,0]
+]
+
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        //把第一行第一列 置为标记位 置零
+        int n = matrix.length,m = matrix[0].length;
+        Boolean nb = false,mb = false;//判断原来第一行，第一列是否有零
+        for(int i = 0; i < n; i++)
+            if(matrix[i][0] == 0)
+                mb = true;
+        for(int i = 0; i < m; i++)
+            if(matrix[0][i] == 0)
+                nb = true;
+        for(int i = 1; i < n; i++) {
+            for(int j = 1; j < m; j++) {
+                if(matrix[i][j] == 0) {
+                    matrix[0][j] = 0;
+                    matrix[i][0] = 0;
+                }
+            }
+        }
+        
+        for(int i = 1; i < n; i++) {
+            if(matrix[i][0] == 0)
+                for(int j = 1; j < m; j++)
+                    matrix[i][j] = 0;
+        }
+        for(int i = 1; i < m; i++) {
+            if(matrix[0][i] == 0)
+                for(int j = 1; j < n; j++)
+                    matrix[j][i] = 0;
+        }
+        if(mb == true)
+        for(int i = 0; i < n; i++) {
+            matrix[i][0] = 0;
+        }
+        if(nb == true)
+        for(int j = 0; j < m; j++) {
+            matrix[0][j] = 0;
+        }
+    }
+}
