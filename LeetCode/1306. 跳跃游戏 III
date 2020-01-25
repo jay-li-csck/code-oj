@@ -1,0 +1,80 @@
+这里有一个非负整数数组 arr，你最开始位于该数组的起始下标 start 处。当你位于下标 i 处时，你可以跳到 i + arr[i] 或者 i - arr[i]。
+
+请你判断自己是否能够跳到对应元素值为 0 的 任意 下标处。
+
+注意，不管是什么情况下，你都无法跳到数组之外。
+
+ 
+
+示例 1：
+
+输入：arr = [4,2,3,0,3,1,2], start = 5
+输出：true
+解释：
+到达值为 0 的下标 3 有以下可能方案： 
+下标 5 -> 下标 4 -> 下标 1 -> 下标 3 
+下标 5 -> 下标 6 -> 下标 4 -> 下标 1 -> 下标 3 
+
+示例 2：
+
+输入：arr = [4,2,3,0,3,1,2], start = 0
+输出：true 
+解释：
+到达值为 0 的下标 3 有以下可能方案： 
+下标 0 -> 下标 4 -> 下标 1 -> 下标 3
+
+示例 3：
+
+输入：arr = [3,0,2,1,2], start = 2
+输出：false
+解释：无法到达值为 0 的下标 1 处。 
+
+class Solution {
+    boolean[] vis; 
+    int n; 
+     public boolean canReach(int[] a, int start) {
+         n = a.length;
+         vis = new boolean[n];
+         return fun(a,start);
+     }
+    private boolean fun(int[] a,int st) {
+        if(st >= n || st  < 0 || vis[st])
+            return false;
+        if(a[st] == 0)
+            return true;//走到值为零的节点
+        vis[st] = true;//标记   左右递归寻找
+        return fun(a,st + a[st]) || fun(a,st - a[st]);
+    }
+}
+    /*
+    public boolean canReach(int[] a, int start) {
+    List<List<Integer>> list = new ArrayList<>();
+        int n = a.length;
+        for(int i = 0; i < n; i++)
+            list.add(new ArrayList<>());
+        for(int i = 0; i < n; i++){
+            if(a[i] + i < n)
+                list.get(a[i]+i).add(i);//添加图中可以走的节点  
+            if(i - a[i] >= 0)
+                list.get(i-a[i]).add(i);
+        }
+        boolean[] vis = new boolean[n];
+        Queue<Integer> q = new LinkedList<>();
+        for(int i = 0; i < n; i++) {
+            if(a[i] == 0){
+                q.offer(i);
+                vis[i] = true;
+            }    
+        }
+        while(!q.isEmpty()) {
+            int t = q.poll();
+            for(int i : list.get(t)) {//t 为可以走的节点
+                if(!vis[i]) {
+                    vis[i] = true;
+                    q.offer(i);
+                }
+            }
+        }
+        return vis[start];
+    }
+}*/
