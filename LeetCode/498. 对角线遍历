@@ -1,0 +1,49 @@
+给定一个含有 M x N 个元素的矩阵（M 行，N 列），请以对角线遍历的顺序返回这个矩阵中的所有元素，对角线遍历如下图所示。
+示例:
+
+输入:
+[
+ [ 1, 2, 3 ],
+ [ 4, 5, 6 ],
+ [ 7, 8, 9 ]
+]
+
+输出:  [1,2,4,7,5,3,6,8,9]
+
+class Solution {
+    public int[] findDiagonalOrder(int[][] matrix) {
+        if(matrix.length == 0 || matrix == null || matrix.length == 0) 
+            return new int[0];
+        int iNum = matrix.length;//i为竖轴 j为横轴
+        int jNum = matrix[0].length;
+        int iIndex = 0,jIndex = 0,rIndex = 0;
+        boolean isUp = true;
+        int[] r = new int[iNum*jNum];
+        //边界
+        while(iIndex < iNum && jIndex < jNum) {
+            if(isUp) {
+                while(iIndex >= 0 && jIndex >=0 && iIndex < iNum && jIndex < jNum) {
+                    r[rIndex++] = matrix[iIndex--][jIndex++];//上 ↗i--j++ 
+                }
+                iIndex++;jIndex--;//多了一次
+                if(jIndex+1 < jNum) //右移一位 down
+                    jIndex++;
+                else
+                    iIndex++;
+                isUp = false;
+            }
+            else {
+                 while(iIndex >= 0 && jIndex >=0 && iIndex < iNum && jIndex < jNum) {
+                    r[rIndex++] = matrix[iIndex++][jIndex--];// ↙ i++ j--
+                }
+                iIndex--;jIndex++;
+                if(iIndex+1 < iNum) //下移一位
+                    iIndex++;
+                else
+                    jIndex++;
+                isUp = true;
+            }
+        }
+        return r;
+    }
+}
