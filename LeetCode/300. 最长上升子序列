@@ -15,7 +15,7 @@
 class Solution {
     public int lengthOfLIS(int[] nums) {
         int max = 0,cnt = 0;
-        int[] dp = new int[nums.length];
+        int[] dp = new int[nums.length];//dp[i]的值代表以nums[i]结尾的最长子序列长度
         Arrays.fill(dp,1);
         for(int i = 0; i < nums.length; i++) {
             for(int j = 0; j < i; j++){//上升  dp[i] = max(dp[i], dp[j] + 1) for j in [0, i)     
