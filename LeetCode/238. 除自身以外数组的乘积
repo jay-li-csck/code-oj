@@ -1,0 +1,23 @@
+给定长度为 n 的整数数组 nums，其中 n > 1，返回输出数组 output ，其中 output[i] 等于 nums 中除 nums[i] 之外其余各元素的乘积。
+
+示例:
+
+输入: [1,2,3,4]
+输出: [24,12,8,6]
+
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int[] r = new int[nums.length];
+        int k = 1;
+        for(int i = 0; i < nums.length; i++) {//从左往右乘
+            r[i] = k;
+            k = k * nums[i];
+        }
+        k = 1;
+        for(int i = nums.length-1; i >= 0; i--) {
+            r[i] *= k;
+            k = k * nums[i];
+        }
+        return r;
+    }
+}
