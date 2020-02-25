@@ -1,0 +1,34 @@
+你有一套活字字模 tiles，其中每个字模上都刻有一个字母 tiles[i]。返回你可以印出的非空字母序列的数目。
+
+示例 1：
+
+输入："AAB"
+输出：8
+解释：可能的序列为 "A", "B", "AA", "AB", "BA", "AAB", "ABA", "BAA"。
+
+示例 2：
+
+输入："AAABBC"
+输出：188
+
+class Solution {
+    public int numTilePossibilities(String tiles) {
+        int[] a = new int[26];
+        for(char ch : tiles.toCharArray()) {
+            a[ch-'A']++;//每个字符出现的次数
+        }
+        return dfs(a);
+    }
+    private int dfs(int[] a) {
+        int sum = 0;
+        for(int i = 0; i < 26; i++) {
+            if(a[i] > 0) {
+                sum++;
+                a[i]--;
+                sum += dfs(a);
+                a[i]++;
+            }
+        }
+        return sum;
+    }
+}
